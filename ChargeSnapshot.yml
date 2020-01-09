@@ -7,6 +7,9 @@
     vcenter_username: ""
     vcenter_password: ""
     vm_name: ""
+    folder: ""
+    dc: ""
+    snapshot_name: ""
     
   tasks:
     - name: Revert to a snapshot
@@ -15,10 +18,10 @@
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         validate_certs: False
-        datacenter: Colombes
-        folder: Colombes/Compute-VRTX/
+        datacenter: "{{ dc }}"
+        folder: "{{ folder }}"
         name: "{{ item }}"
         state: revert
-        snapshot_name: Installation
+        snapshot_name: "{{ snapshot_name }}"
       with_items: "{{ vm_name }}"
       delegate_to: localhost
