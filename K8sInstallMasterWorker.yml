@@ -86,14 +86,14 @@
         - 10250/tcp
         - 10251/tcp
         - 10252/tcp
-      when: "'k8s-master' in group_names"
+      when: "'k8sMaster' in group_names"
 
     - name: Open port for K8s-Worker
       command: firewall-cmd --add-port="{{ item }}" --permanent
       with_items:
         - 10250/tcp
         - 30000-32767/tcp
-      when: "'k8s-worker' in group_names"
+      when: "'k8sWorker' in group_names"
 
     - name: Restart Firewalld
       systemd:
@@ -122,14 +122,14 @@
 
     - name: Initialize the Kubernetes cluster using kubeadm
       command: kubeadm init --apiserver-advertise-address="{{ host_addr }}" --apiserver-cert-extra-sans="{{ host_addr }}"  --node-name "{{ ansible_hostname }}" --pod-network-cidr=192.168.0.0/16
-      when: "'k8s-master' in group_names"
+      when: "'k8sMaster' in group_names"
 
     - name: Create /root/.kube if it does not exist
       file:
         path: /root/.kube
         state: directory
         mode: '0755'
-      when: "'k8s-master' in group_names"
+      when: "'k8sMaster' in group_names"
     
     - name: Copy a new "/etc/kubernetes/admin.conf" file into place, backing up the original if it differs from the copied version
       copy:
@@ -139,22 +139,22 @@
         group: root
         mode: '0644'
         backup: yes
-      when: "'k8s-master' in group_names"
+      when: "'k8sMaster' in group_names"
 
     - name: Generate join command
       command: kubeadm token create --print-join-command
       register: join_command
-      when: "'k8s-master' in group_names"
+      when: "'k8sMaster' in group_names"
 
     - name: Copy join command to local file
       local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"
-      when: "'k8s-master' in group_names"
+      when: "'k8sMaster' in group_names"
 
 #trouver comment récupérer le join command
     - name: Copy the join command to server location
       copy: src=join-command dest=/tmp/join-command.sh mode=0777
-      when: "'k8s-worker' in group_names"
+      when: "'k8sWorker' in group_names"
 
     - name: Join the Kubernetes cluster
       command: sh /tmp/join-command.sh
-      when: "'k8s-worker' in group_names"
+      when: "'k8sWorker' in group_names"
