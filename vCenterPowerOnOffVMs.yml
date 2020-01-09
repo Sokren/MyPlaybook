@@ -1,0 +1,22 @@
+---
+# Shutdown or Start all VMs on a vCenter (only for demo)
+- hosts: all
+  #Variables for vCenter and VMs
+  vars:
+    vcenter_ip: ""
+    vcenter_username: ""
+    vcenter_password: ""
+    vm_name: ""
+    state: ""
+    
+  tasks:
+    - name: Set {{ state }} of virtuals machines
+      vmware_guest:
+        hostname: "{{ vcenter_ip }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: False
+        name : "{{ item }}"
+        state: "{{ state }}"
+      with_items: "{{ vm_name }}"
+      delegate_to: localhost
