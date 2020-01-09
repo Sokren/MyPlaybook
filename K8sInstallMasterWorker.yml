@@ -1,6 +1,6 @@
 ---
 # Install K8s
-- hosts: kubernetes
+- hosts: all
   vars:
     host_addr: ""
     join_command: ""
