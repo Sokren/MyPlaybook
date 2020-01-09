@@ -2,7 +2,7 @@
 # Install K8s
 - hosts: kubernetes
   vars:
-    host_addr: "10.50.51.100"
+    host_addr: ""
     join_command: ""
 
   tasks:  
