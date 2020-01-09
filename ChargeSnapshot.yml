@@ -1,0 +1,24 @@
+---
+# Shutdown all VMs on a vCenter (only for demo)
+- hosts: all
+  #Variables for vCenter and VMs
+  vars:
+    vcenter_ip: ""
+    vcenter_username: ""
+    vcenter_password: ""
+    vm_name: ""
+    
+  tasks:
+    - name: Revert to a snapshot
+      vmware_guest_snapshot:
+        hostname: "{{ vcenter_ip }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: False
+        datacenter: Colombes
+        folder: Colombes/Compute-VRTX/
+        name: "{{ item }}"
+        state: revert
+        snapshot_name: Installation
+      with_items: "{{ vm_name }}"
+      delegate_to: localhost
