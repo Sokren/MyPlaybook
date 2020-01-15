@@ -13,7 +13,6 @@
     vm_ram: ""
     vm_cpus: ""
     vm_cpu_cores_per_socket: ""
-    vm_name: ""
     vm_disk_gb: ""
     
   tasks:
