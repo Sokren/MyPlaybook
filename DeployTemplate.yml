@@ -7,6 +7,7 @@
     vcenter_username: ""
     vcenter_password: ""
     vm_name: ""
+    dc: ""
     
   tasks:
     - name: Create a virtual machine from a template
@@ -15,6 +16,7 @@
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         validate_certs: no
+        datacenter: "{{ dc }}"
         folder: "/vSAN Datacenter/Linux" 
         name: testvm_2
         state: poweredon
