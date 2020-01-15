@@ -8,6 +8,7 @@
     vcenter_password: ""
     vm_name: ""
     dc: ""
+    folder: ""
     
   tasks:
     - name: Create a virtual machine from a template
@@ -17,7 +18,7 @@
         password: "{{ vcenter_password }}"
         validate_certs: no
         datacenter: "{{ dc }}"
-        folder: "/vSAN Datacenter/Linux" 
+        folder: "{{ folder }}" 
         name: testvm_2
         state: poweredon
         template: Template_CentOS_7
