@@ -1,0 +1,50 @@
+---
+# Deploy a VM from Template
+- hosts: all
+  #Variables for vCenter and VMs
+  vars:
+    vcenter_ip: ""
+    vcenter_username: ""
+    vcenter_password: ""
+    vm_name: ""
+    
+  tasks:
+    - name: Create a virtual machine from a template
+      vmware_guest:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        folder: "/vSAN Datacenter/Linux" 
+        name: testvm_2
+        state: poweredon
+        template: Template_CentOS_7
+        disk:
+        - size_gb: 50
+          type: thin
+          datastore: vsanDatastore
+        hardware:
+          memory_mb: 512
+          num_cpus: 4 #For example to create a VM with 2 sockets of 4 cores, specify num_cpus: 8 and num_cpu_cores_per_socket: 4
+          num_cpu_cores_per_socket: 2
+          scsi: paravirtual
+          memory_reservation_lock: True
+          mem_limit: 8096
+          mem_reservation: 4096
+          #cpu_limit: 8096
+          #cpu_reservation: 4096
+          #max_connections: 5
+          hotadd_cpu: True
+          hotremove_cpu: True
+          hotadd_memory: False
+          #version: 12 # Hardware version of virtual machine
+          boot_firmware: "efi"
+        #cdrom:
+        #  type: iso
+        #  iso_path: "[datastore1] livecd.iso"
+        #networks:
+        #- name: VM Network
+        #  mac: aa:bb:dd:aa:00:14
+        wait_for_ip_address: yes
+      delegate_to: localhost
+      #register: deploy
