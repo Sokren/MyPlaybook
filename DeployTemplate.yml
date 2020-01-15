@@ -11,7 +11,7 @@
   tasks:
     - name: Create a virtual machine from a template
       vmware_guest:
-        hostname: "{{ vcenter_hostname }}"
+        hostname: "{{ vcenter_ip }}"
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         validate_certs: no
