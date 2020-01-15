@@ -14,6 +14,8 @@
     vm_cpus: ""
     vm_cpu_cores_per_socket: ""
     vm_disk_gb: ""
+    vm_hostname: ""
+    vm_os: ""
     
   tasks:
     - name: Create a virtual machine from a template
@@ -56,3 +58,6 @@
         wait_for_ip_address: yes
       delegate_to: localhost
       #register: deploy
+    - hostname:
+      name: "{{ vm_hostname }}"
+      use: "{{ vm_os }}"
