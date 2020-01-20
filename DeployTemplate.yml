@@ -33,8 +33,6 @@
         - size_gb: "{{ vm_disk_gb }}"
           type: thin
           datastore: vsanDatastore
-        #customization:
-        #  hostname: "{{ vm_hostname }}"
         hardware:
           memory_mb: "{{ vm_ram }}"
           num_cpus: "{{ vm_cpus }}" #For example to create a VM with 2 sockets of 4 cores, specify num_cpus: 8 and num_cpu_cores_per_socket: 4
@@ -51,6 +49,8 @@
           #hotadd_memory: False
           #version: 12 # Hardware version of virtual machine
           boot_firmware: "efi"
+        customization:
+          hostname: "{{ vm_hostname }}"
         #cdrom:
         #  type: iso
         #  iso_path: "[datastore1] livecd.iso"
@@ -60,6 +60,6 @@
         wait_for_ip_address: yes
       delegate_to: localhost
       #register: deploy
-    - hostname:
-      name: "{{ vm_hostname }}"
-      use: "{{ vm_os }}"
+    #- hostname:
+    #  name: "{{ vm_hostname }}"
+    #  use: "{{ vm_os }}"
