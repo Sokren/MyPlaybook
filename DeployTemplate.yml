@@ -49,6 +49,9 @@
           #hotadd_memory: False
           #version: 12 # Hardware version of virtual machine
           boot_firmware: "efi"
+        networks:
+        - name: VM Network
+          type: dhcp
         customization:
           hostname: "{{ vm_hostname }}"
         #cdrom:
