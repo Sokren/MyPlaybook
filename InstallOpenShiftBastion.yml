@@ -31,7 +31,7 @@
 
     - name: Move files to /usr/local/bin
       copy:
-        src: /tmp/ocp4/"{{ item }}"
+        src: /tmp/ocp4/{{ item }}
         dest: /usr/local/bin
         mode: '0755'
       with_items:
