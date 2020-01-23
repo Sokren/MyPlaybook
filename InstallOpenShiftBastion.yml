@@ -1,0 +1,57 @@
+---
+- hosts: all
+  vars:
+  
+# Install  
+  tasks:
+    - name: Create .openshift directory if it does not exist
+      file:
+        path: ~/.openshift
+        state: directory
+        mode: '0755'
+    - name: Create /tmp/ocp4 directory if it does not exist
+      file:
+        path: /tmp/ocp4
+        state: directory
+        mode: '0755'
+
+#Trouver comment mettre le fichier pull-secret
+
+    - name: Donwload file for ocp4
+      unarchive:
+        src: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-4.2.14.tar.gz
+        dest: /tmp/ocp4
+        remote_src: yes
+
+    - name: Donwload file for ocp4
+      unarchive:
+        src: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.2.14.tar.gz
+        dest: /tmp/ocp4
+        remote_src: yes
+
+    - name: Move files to /usr/local/bin
+      copy:
+        src: /tmp/ocp4/"{{ item }}"
+        dest: /usr/local/bin
+        mode: '0755'
+      with_items:
+        - oc
+        - kubectl
+        - openshift-install
+
+    - name: Create SSH Key
+      openssh_keypair:
+        path: ~/.ssh/id_rsa
+
+    - name: Create .openshift directory if it does not exist
+      file:
+        path: ~/openshift4
+        state: directory
+        mode: '0755'
+
+#Utiliser Template pour faire le fichier install-config.yaml
+
+#    - name: Change the working directory to somedir/ and run the command as db_owner if /path/to/database does not exist.
+#      command: openshift-install create manifests
+#      args:
+#        chdir: ~/openshift4/
