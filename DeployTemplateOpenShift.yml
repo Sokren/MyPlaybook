@@ -37,6 +37,7 @@
           datastore: "{{ datastore }}"
         hardware:
           memory_mb: "{{ vm_ram }}"
+          #mem_reservation: "{{ vm_ram }}"
           num_cpus: "{{ vm_cpus }}" #For example to create a VM with 2 sockets of 4 cores, specify num_cpus: 8 and num_cpu_cores_per_socket: 4
           num_cpu_cores_per_socket: "{{ vm_cpu_cores_per_socket }}"
           scsi: paravirtual
@@ -45,14 +46,33 @@
         - name: VM Network
           mac: "{{ vm_mac }}"
           type: dhcp
-        customvalues:
-          - key: guestinfo.ignition.config.data.encoding
-            value: "base64"
-          - key: disk.EnableUUID
-            value: "TRUE"
-          - key: guestinfo.ignition.config.data
-            value: "{{ ignition_file }}"
+#        customvalues:
+#          - key: guestinfo.ignition.config.data.encoding
+#            value: "base64"
+#          - key: disk.EnableUUID
+#            value: "TRUE"
+#          - key: guestinfo.ignition.config.data
+#            value: "{{ ignition_file }}"
         #customization: 
         #  hostname: "{{ vm_hostname }}"
         #wait_for_ip_address: yes
+      delegate_to: localhost
+      
+    - name: change configuration parameter
+      vmware_guest_custom_attributes:
+        hostname: "{{ vcenter_ip }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        datacenter: "{{ dc }}"
+        folder: "{{ folder }}" 
+        name: "{{ vm_name }}"
+        state: present
+        attributes:
+          - name: guestinfo.ignition.config.data.encoding
+            value: "base64"
+          - name: disk.EnableUUID
+            value: "TRUE"
+          - key: guestinfo.ignition.config.data
+            name: "{{ ignition_file }}"
       delegate_to: localhost
