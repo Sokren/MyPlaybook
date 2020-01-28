@@ -74,5 +74,5 @@
           - name: disk.EnableUUID
             value: TRUE
           - key: guestinfo.ignition.config.data
-            name: {{ ignition_file }}
+            name: "{{ ignition_file }}"
       delegate_to: localhost
