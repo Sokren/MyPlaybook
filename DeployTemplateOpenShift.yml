@@ -44,7 +44,7 @@
           boot_firmware: "efi"
         networks:
         - name: VM Network
-          mac: {{ vm_mac }}
+          mac: "{{ vm_mac }}"
           type: dhcp
       delegate_to: localhost
       
