@@ -6,19 +6,35 @@
     vcenter_ip: ""
     vcenter_username: ""
     vcenter_password: ""
-    vm_name: ""
+    #vm_name: ""
     dc: ""
     folder: ""
     template: ""
     datastore: ""
-    vm_ram: ""
-    vm_cpus: ""
-    vm_cpu_cores_per_socket: ""
+    worker_vm_ram: ""
+    master_vm_ram: ""
+    bootstrap_vm_ram: ""
+    worker_vm_cpus: ""
+    master_vm_cpus: ""
+    bootstrap_vm_cpus: ""
+    #vm_cpu_cores_per_socket: ""
     vm_disk_gb: ""
-    vm_hostname: ""
-    vm_mac: ""
-    ignition_file: ""
-    testvar: { vm_name: "{{ vm_name }}", vm_ram: "8196", vm_cpus: "8" }
+    #vm_hostname: ""
+    worker1_vm_mac: ""
+    worker2_vm_mac: ""
+    master1_vm_mac: ""
+    master2_vm_mac: ""
+    master3_vm_mac: ""
+    bootstrap_vm_mac: ""
+    worker_ignition_file: ""
+    master_ignition_file: ""
+    bootstrap_ignition_file: ""
+    table_item_worker1: { vm_name: "testworker1", vm_ram: "{{ worker_vm_ram }}", vm_cpus: "{{ worker_vm_cpus }}", ignition_file: "{{ worker_ignition_file }}", vm_mac: "{{ worker1_vm_mac }}" }
+    table_item_worker2: { vm_name: "testworker2", vm_ram: "{{ worker_vm_ram }}", vm_cpus: "{{ worker_vm_cpus }}", ignition_file: "{{ worker_ignition_file }}", vm_mac: "{{ worker2_vm_mac }}" }
+    table_item_master1: { vm_name: "testmaster1", vm_ram: "{{ master_vm_ram }}", vm_cpus: "{{ master_vm_cpus }}", ignition_file: "{{ master_ignition_file }}", vm_mac: "{{ master1_vm_mac }}" }
+    table_item_master2: { vm_name: "testmaster2", vm_ram: "{{ master_vm_ram }}", vm_cpus: "{{ master_vm_cpus }}", ignition_file: "{{ master_ignition_file }}", vm_mac: "{{ master2_vm_mac }}" }
+    table_item_master3: { vm_name: "testmaster3", vm_ram: "{{ master_vm_ram }}", vm_cpus: "{{ master_vm_cpus }}", ignition_file: "{{ master_ignition_file }}", vm_mac: "{{ master3_vm_mac }}" }
+    table_item_bootstrap: { vm_name: "testbootstrap", vm_ram: "{{ bootstrap_vm_ram }}", vm_cpus: "{{ bootstrap_vm_cpus }}", ignition_file: "{{ bootstrap_ignition_file }}", vm_mac: "{{ bootstrap_vm_mac }}" }
     
   tasks:
     - name: Create a virtual machine from a template
@@ -47,6 +63,59 @@
         - name: "VM Network"
           type: dhcp
       with_items:
-          - "{{ testvar }}"
-          - { vm_name: testworker2, vm_ram: "1024", vm_cpus: "4" }
+          - "{{ table_item_worker1 }}"
+          - "{{ table_item_worker2 }}"
+          - "{{ table_item_master1 }}"
+          - "{{ table_item_master2 }}"
+          - "{{ table_item_master3 }}"
+          - "{{ table_item_bootstrap }}"
+      delegate_to: localhost
+      
+    - name: change configuration parameter
+      vmware_guest_custom_attributes:
+        hostname: "{{ vcenter_ip }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        datacenter: "{{ dc }}"
+        folder: "{{ folder }}" 
+        name: "{{ item.vm_name }}"
+        state: present
+        attributes:
+          - name: guestinfo.ignition.config.data.encoding
+            value: "base64"
+          - name: disk.EnableUUID
+            value: "TRUE"
+          - name: guestinfo.ignition.config.data
+            value: "{{ item.ignition_file }}"
+      with_items:
+          - "{{ table_item_worker1 }}"
+          - "{{ table_item_worker2 }}"
+          - "{{ table_item_master1 }}"
+          - "{{ table_item_master2 }}"
+          - "{{ table_item_master3 }}"
+          - "{{ table_item_bootstrap }}"
+      delegate_to: localhost
+      
+    - name: change mac address
+      vmware_guest_network:
+        hostname: "{{ vcenter_ip }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        datacenter: "{{ dc }}"
+        folder: "{{ folder }}" 
+        name: "{{ item.vm_name }}"
+        gather_network_info: false
+        networks:
+          - label: "Network adapter 1"
+            state: present
+            manual_mac: "{{ item.vm_mac }}"
+      with_items:
+          - "{{ table_item_worker1 }}"
+          - "{{ table_item_worker2 }}"
+          - "{{ table_item_master1 }}"
+          - "{{ table_item_master2 }}"
+          - "{{ table_item_master3 }}"
+          - "{{ table_item_bootstrap }}"
       delegate_to: localhost
