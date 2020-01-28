@@ -44,18 +44,8 @@
           boot_firmware: "efi"
         networks:
         - name: VM Network
-          mac: "{{ vm_mac }}"
+          mac: {{ vm_mac }}
           type: dhcp
-#        customvalues:
-#          - key: guestinfo.ignition.config.data.encoding
-#            value: "base64"
-#          - key: disk.EnableUUID
-#            value: "TRUE"
-#          - key: guestinfo.ignition.config.data
-#            value: "{{ ignition_file }}"
-        #customization: 
-        #  hostname: "{{ vm_hostname }}"
-        #wait_for_ip_address: yes
       delegate_to: localhost
       
     - name: change configuration parameter
