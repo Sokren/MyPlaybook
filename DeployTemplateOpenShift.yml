@@ -78,7 +78,7 @@
         name: "{{ vm_name }}"
         gather_network_info: false
         networks:
-          - label: "VM Network"
+          - label: "Network adapter 1"
             state: present
             manual_mac: "{{ vm_mac }}"
       delegate_to: localhost
