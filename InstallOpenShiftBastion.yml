@@ -57,8 +57,32 @@
         mode: '0755'
 
 #Utiliser Template pour faire le fichier install-config.yaml
+    - name: Download append-bootstrap.ign
+      get_url:
+        url: http://webocp4.fuji.bsctdas.local/ocp4file/install-config.yaml
+        dest: ~/openshift4/install-config.yaml
 
-#    - name: Change the working directory to somedir/ and run the command as db_owner if /path/to/database does not exist.
-#      command: openshift-install create manifests
-#      args:
-#        chdir: ~/openshift4/
+    - name: Create manifests for OpenShift
+      command: openshift-install create manifests --dir=~/openshift4
+
+    - name: Change masterSchedulable true to false
+      command: "sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' manifests/cluster-scheduler-02-config.yml"
+
+    - name: Create ignition for OpenShift
+      command: openshift-install create ignition-configs --dir=~/openshift4
+    
+# Trouver pour créer append-bootstrap.ign
+    - name: Download append-bootstrap.ign
+      get_url:
+        url: http://webocp4.fuji.bsctdas.local/ocp4file/append-bootstrap.ign
+        dest: ~/openshift4/append-bootstrap.ign
+
+    - name: Transfer bootstrap ignifition file from Bastion to Webserver
+      synchronize:
+        src: ~/openshift4/bootstrap.ign
+        dest: /var/www/html/ignition/test/bootstrap.ign
+        mode: pull
+      delegate_to: "{{ webserver }}"
+    
+    - name: Convert ignition files to base64
+      command: "for i in append-bootstrap master worker; do base64 -w0 < $i.ign > $i.64; done"
