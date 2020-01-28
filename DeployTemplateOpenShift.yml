@@ -49,7 +49,7 @@
           - id: guestinfo.ignition.config.data.encoding
             value: "base64"
           - id: disk.EnableUUID
-            value: TRUE
+            value: "TRUE"
           - id: guestinfo.ignition.config.data
             value: "{{ ignition_file }}"
         #customization: 
