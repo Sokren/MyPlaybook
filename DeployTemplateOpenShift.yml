@@ -70,9 +70,9 @@
         state: present
         attributes:
           - name: guestinfo.ignition.config.data.encoding
-            value: "base64"
+            value: base64
           - name: disk.EnableUUID
-            value: "TRUE"
+            value: TRUE
           - key: guestinfo.ignition.config.data
-            name: "{{ ignition_file }}"
+            name: {{ ignition_file }}
       delegate_to: localhost
