@@ -18,6 +18,7 @@
     vm_hostname: ""
     vm_mac: ""
     ignition_file: ""
+    testvar: { vm_name: "{{ vm_name }}", vm_ram: "8196", vm_cpus: "8" }
     
   tasks:
     - name: Create a virtual machine from a template
@@ -46,6 +47,6 @@
         - name: "VM Network"
           type: dhcp
       with_items:
-          - { vm_name: "{{ vm_name }}", vm_ram: "8196", vm_cpus: "8" }
+          - "{{ testvar }}"
           - { vm_name: testworker2, vm_ram: "1024", vm_cpus: "4" }
       delegate_to: localhost
