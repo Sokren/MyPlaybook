@@ -46,13 +46,13 @@
         - name: VM Network
           mac: "{{ vm_mac }}"
           type: dhcp
-#        customvalues:
+        customvalues:
 #          - key: guestinfo.ignition.config.data.encoding
 #            value: "base64"
 #          - key: disk.EnableUUID
 #            value: "TRUE"
-#          - key: guestinfo.ignition.config.data
-#            value: "{{ ignition_file }}"
+          - key: guestinfo.ignition.config.data
+            value: "{{ ignition_file }}"
         #customization: 
         #  hostname: "{{ vm_hostname }}"
         #wait_for_ip_address: yes
@@ -73,6 +73,6 @@
             value: "base64"
           - name: disk.EnableUUID
             value: "TRUE"
-          - name: "guestinfo.ignition.config.data"
+          - name: guestinfo.ignition.config.data
             value: "{{ ignition_file }}"
       delegate_to: localhost
