@@ -43,9 +43,9 @@
           scsi: paravirtual
           boot_firmware: "efi"
         networks:
-#        - name: "VM Network"
+        - name: "VM Network"
 #          mac: "{{ vm_mac }}"
-#          type: dhcp
+          type: dhcp
       with_items:
           - { vm_name: testworker1, vm_ram: "8196", vm_cpus: "8" }
           - { vm_name: testworker2, vm_ram: "1024", vm_cpus: "4" }
