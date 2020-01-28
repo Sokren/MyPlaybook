@@ -44,9 +44,8 @@
           boot_firmware: "efi"
         networks:
         - name: "VM Network"
-#          mac: "{{ vm_mac }}"
           type: dhcp
       with_items:
-          - { vm_name: testworker1, vm_ram: "8196", vm_cpus: "8" }
+          - { vm_name: "{{ vm_name }}", vm_ram: "8196", vm_cpus: "8" }
           - { vm_name: testworker2, vm_ram: "1024", vm_cpus: "4" }
       delegate_to: localhost
