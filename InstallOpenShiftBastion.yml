@@ -63,13 +63,13 @@
         dest: ~/openshift4/install-config.yaml
 
     - name: Create manifests for OpenShift
-      command: openshift-install create manifests --dir=~/openshift4
+      command: openshift-install create manifests --dir ~/openshift4
 
     - name: Change masterSchedulable true to false
       command: "sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' manifests/cluster-scheduler-02-config.yml"
 
     - name: Create ignition for OpenShift
-      command: openshift-install create ignition-configs --dir=~/openshift4
+      command: openshift-install create ignition-configs --dir ~/openshift4
     
 # Trouver pour créer append-bootstrap.ign
     - name: Download append-bootstrap.ign
