@@ -66,3 +66,18 @@
           - name: guestinfo.ignition.config.data
             value: "{{ ignition_file }}"
       delegate_to: localhost
+      
+    - name: change mac address
+      vmware_guest_network:
+        hostname: "{{ vcenter_ip }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        datacenter: "{{ dc }}"
+        folder: "{{ folder }}" 
+        name: "{{ vm_name }}"
+        gather_network_info: false
+        networks:
+          - state: present
+            mac: "{{ vm_mac }}"
+      delegate_to: localhost
