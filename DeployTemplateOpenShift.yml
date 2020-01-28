@@ -45,12 +45,12 @@
         - name: VM Network
           mac: "{{ vm_mac }}"
           type: dhcp
-        vapp_properties:
-          - id: guestinfo.ignition.config.data.encoding
+        customvalues:
+          - key: guestinfo.ignition.config.data.encoding
             value: "base64"
-          - id: disk.EnableUUID
+          - key: disk.EnableUUID
             value: "TRUE"
-          - id: guestinfo.ignition.config.data
+          - key: guestinfo.ignition.config.data
             value: "{{ ignition_file }}"
         #customization: 
         #  hostname: "{{ vm_hostname }}"
