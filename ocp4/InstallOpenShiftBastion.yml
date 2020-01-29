@@ -73,7 +73,7 @@
 #Utiliser Template pour faire le fichier install-config.yaml
     - name: Get install-config.yaml
       template:
-        src: ~/templates/install-config.yaml.j2
+        src: /tmp/install-config.yaml.j2
         dest: ~/openshift4/install-config.yaml
         remote_src: yes
     
