@@ -70,7 +70,7 @@
     - name: Ensure SELinux is set to enforcing mode
       lineinfile:
         path: ~/openshift4/manifests/cluster-scheduler-02-config.yml
-        regexp: '^mastersSchedulable:'
+        regexp: 'mastersSchedulable: true'
         line: "mastersSchedulable: false"
 
 #    - name: Create ignition for OpenShift
@@ -90,7 +90,7 @@
 #      delegate_to: "10.50.51.107"
     
     - name: Convert ignition files to base64
-      command: "base64 -w0 < {{item }}.ign > {{ item }}.64"
+      command: "base64 -w0 {{item }}.ign {{ item }}.64"
       with_items:
         - append-bootstrap
         - master
