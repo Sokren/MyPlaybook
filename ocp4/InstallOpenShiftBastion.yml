@@ -92,8 +92,8 @@
         regexp: 'mastersSchedulable: true'
         line: "mastersSchedulable: false"
 
-    - name: Create ignition for OpenShift
-      command: openshift-install create ignition-configs --dir ~/openshift4
+#    - name: Create ignition for OpenShift
+#      command: openshift-install create ignition-configs --dir ~/openshift4
     
 # Trouver pour créer append-bootstrap.ign
     #- name: Download append-bootstrap.ign
@@ -101,10 +101,10 @@
     #    url: http://webocp4.fuji.bsctdas.local/ocp4file/append-bootstrap.ign
     #    dest: ~/openshift4/append-bootstrap.ign
     
-    - name: Get append-bootstrap.ign
-      template:
-        src: ~/templates/append-bootstrap.ign.j2
-        dest: ~/openshift4/append-bootstrap.ign
+#    - name: Get append-bootstrap.ign
+#      template:
+#        src: ~/templates/append-bootstrap.ign.j2
+#        dest: ~/openshift4/append-bootstrap.ign
 
 #    - name: Transfer bootstrap ignifition file from Bastion to Webserver
 #      synchronize:
