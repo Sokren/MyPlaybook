@@ -89,6 +89,7 @@
         dest: /var/www/html/ignition/test/bootstrap.ign
         mode: pull
       delegate_to: "{{ webserver }}"
+      remote_user: root
     
     - name: Convert ignition files to base64
       command: "base64 -w0 < {{item }}.ign > {{ item }}.64"
