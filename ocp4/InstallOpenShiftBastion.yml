@@ -32,13 +32,13 @@
 
     - name: Donwload file for ocp4
       unarchive:
-        src: {{ download.ocpClient }}
+        src: "{{ download.ocpClient }}"
         dest: /tmp/ocp4
         remote_src: yes
 
     - name: Donwload file for ocp4
       unarchive:
-        src: {{ download.ocpInstall }}
+        src: "{{ download.ocpInstall }}"
         dest: /tmp/ocp4
         remote_src: yes
 
