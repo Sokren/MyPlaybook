@@ -75,6 +75,7 @@
       template:
         src: ~/templates/install-config.yaml.j2
         dest: ~/openshift4/install-config.yaml
+        remote_src: yes
     
     #- name: Download install-config.yaml
     #  get_url:
@@ -105,6 +106,7 @@
 #      template:
 #        src: ~/templates/append-bootstrap.ign.j2
 #        dest: ~/openshift4/append-bootstrap.ign
+#        remote_src: yes
 
 #    - name: Transfer bootstrap ignifition file from Bastion to Webserver
 #      synchronize:
