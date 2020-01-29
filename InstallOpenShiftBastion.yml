@@ -87,7 +87,7 @@
         src: ~/openshift4/bootstrap.ign
         dest: rsync://{{ webserver }}/var/www/html/ignition/test/bootstrap.ign
       #  mode: pull
-      #delegate_to: "{{ webserver }}"
+      delegate_to: "10.50.51.107"
     
     - name: Convert ignition files to base64
       command: "base64 -w0 < {{item }}.ign > {{ item }}.64"
