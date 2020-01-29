@@ -8,7 +8,7 @@
       datastore: ""
       username: ""
       password: ""
-      datacenter: dc
+      datacenter: ""
     pullSecret: ""
     sshKey: ""
     download:
@@ -75,6 +75,7 @@
       template:
         src: "/tmp/install-config.yaml.j2"
         dest: ~/openshift4/install-config.yaml
+        remote_src: yes
       #delegate_to: localhost
     
     #- name: Download install-config.yaml
