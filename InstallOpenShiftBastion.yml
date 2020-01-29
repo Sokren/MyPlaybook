@@ -84,6 +84,7 @@
 
     - name: Transfer bootstrap ignifition file from Bastion to Webserver
       synchronize:
+        use_ssh_args: yes
         src: ~/openshift4/bootstrap.ign
         dest: /var/www/html/ignition/test/bootstrap.ign
         mode: pull
