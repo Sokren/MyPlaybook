@@ -67,11 +67,11 @@
 
     #- name: Change masterSchedulable true to false
     #  command: "sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' manifests/cluster-scheduler-02-config.yml"
-    - name: Ensure SELinux is set to enforcing mode
-      lineinfile:
-        path: ~/openshift4/manifests/cluster-scheduler-02-config.yml
-        regexp: 'mastersSchedulable: true'
-        line: "mastersSchedulable: false"
+#    - name: Ensure SELinux is set to enforcing mode
+#      lineinfile:
+#        path: ~/openshift4/manifests/cluster-scheduler-02-config.yml
+#        regexp: 'mastersSchedulable: true'
+#        line: "mastersSchedulable: false"
 
 #    - name: Create ignition for OpenShift
 #      command: openshift-install create ignition-configs --dir ~/openshift4
@@ -89,9 +89,9 @@
       #  mode: pull
 #      delegate_to: "10.50.51.107"
     
-    - name: Convert ignition files to base64
-      command: "base64 -w0 {{item }}.ign {{ item }}.64"
-      with_items:
-        - append-bootstrap
-        - master
-        - worker
+#    - name: Convert ignition files to base64
+#      command: "base64 -w0 {{item }}.ign {{ item }}.64"
+#      with_items:
+#        - append-bootstrap
+#        - master
+#        - worker
