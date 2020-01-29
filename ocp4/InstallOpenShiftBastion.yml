@@ -75,6 +75,7 @@
       template:
         src: "/tmp/install-config.yaml.j2"
         dest: ~/openshift4/install-config.yaml
+      delegate_to: ansibletower.fuji.bsctdas.local
     
     #- name: Download install-config.yaml
     #  get_url:
