@@ -90,7 +90,7 @@
       lineinfile:
         path: ~/openshift4/manifests/cluster-scheduler-02-config.yml
         regexp: 'mastersSchedulable: true'
-        line: "mastersSchedulable: false"
+        line: "  mastersSchedulable: false"
 
 #    - name: Create ignition for OpenShift
 #      command: openshift-install create ignition-configs --dir ~/openshift4
