@@ -14,6 +14,10 @@
     download:
       ocpClient: "http://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-client-linux-4.3.0.tar.gz"
       ocpInstall: "http://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-install-linux-4.3.0.tar.gz"
+    b64:
+      append-bootstrap: ""
+      worker: ""
+      master: ""
   
 # Install  
   tasks:
@@ -122,3 +126,27 @@
         - append-bootstrap
         - master
         - worker
+        
+    - name: get b64 to var
+      slurp:
+        src: ~/openshift4/append-bootstrap.ign
+      register: b64.append-bootstrap
+      
+    - name: get b64 to var
+      slurp:
+        src: ~/openshift4/worker.ign
+      register: b64.worker
+      
+    - name: get b64 to var
+      slurp:
+        src: ~/openshift4/master.ign
+      register: b64.master
+      
+    - name: Copy b64 var to local file
+      local_action: copy content="{{ b64.append-bootstrap }}" dest="./append-bootstrap.b64"
+    
+    - name: Copy b64 var to local file
+      local_action: copy content="{{ b64.master }}" dest="./master.b64"
+      
+    - name: Copy b64 var to local file
+      local_action: copy content="{{ b64.worker }}" dest="./worker.b64"
