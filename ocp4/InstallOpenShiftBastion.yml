@@ -84,16 +84,16 @@
 #        url: http://webocp4.fuji.bsctdas.local/ocp4file/install-config.yaml
 #        dest: ~/openshift4/install-config.yaml
 
-    - name: Create manifests for OpenShift
-      command: openshift-install create manifests --dir ~/openshift4
+#    - name: Create manifests for OpenShift
+#      command: openshift-install create manifests --dir ~/openshift4
 
     #- name: Change masterSchedulable true to false
     #  command: "sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' manifests/cluster-scheduler-02-config.yml"
-    - name: Change mastersSchedulable to false
-      lineinfile:
-        path: ~/openshift4/manifests/cluster-scheduler-02-config.yml
-        regexp: 'mastersSchedulable: true'
-        line: "  mastersSchedulable: false"
+#    - name: Change mastersSchedulable to false
+#      lineinfile:
+#        path: ~/openshift4/manifests/cluster-scheduler-02-config.yml
+#        regexp: 'mastersSchedulable: true'
+#        line: "  mastersSchedulable: false"
 
 #    - name: Create ignition for OpenShift
 #      command: openshift-install create ignition-configs --dir ~/openshift4
