@@ -125,7 +125,7 @@
         
     - name: Convert ignition files to base64
       shell: "base64 -w0 ~/openshift4/{{ item }}.ign"
-      register: {{ item }}
+      register: "{{ item }}"
       loop:
         - append-bootstrap
         - master
