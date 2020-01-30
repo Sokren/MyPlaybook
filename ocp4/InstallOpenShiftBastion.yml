@@ -83,6 +83,7 @@
       copy:
         src: ~/openshift4/install-config.yaml
         dest: ~/openshift4/install-config.yaml.orig"
+        remote_src: yes
     
 #    - name: Download install-config.yaml
 #      get_url:
