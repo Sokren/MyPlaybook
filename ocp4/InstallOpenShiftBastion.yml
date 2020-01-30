@@ -71,15 +71,21 @@
         mode: '0755'
 
 #Utiliser Template pour faire le fichier install-config.yaml
-#    - name: Get install-config.yaml
-#      template:
-#        src: "/tmp/install-config.yaml.j2"
-#        dest: ~/openshift4/install-config.yaml
-    
-    - name: Download install-config.yaml
-      get_url:
-        url: http://webocp4.fuji.bsctdas.local/ocp4file/install-config.yaml
+    - name: Copy join command to local file
+      local_action: 
+        get_url:
+          url: http://webocp4.fuji.bsctdas.local/ocp4file/install-config.yaml.j2
+          dest: install-config.yaml.j2
+          
+    - name: Get install-config.yaml
+      template:
+        src: "install-config.yaml.j2"
         dest: ~/openshift4/install-config.yaml
+    
+#    - name: Download install-config.yaml
+#      get_url:
+#        url: http://webocp4.fuji.bsctdas.local/ocp4file/install-config.yaml
+#        dest: ~/openshift4/install-config.yaml
 
     - name: Create manifests for OpenShift
       command: openshift-install create manifests --dir ~/openshift4
