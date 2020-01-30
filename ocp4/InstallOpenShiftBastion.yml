@@ -79,24 +79,29 @@
         src: "install-config.yaml.j2"
         dest: ~/openshift4/install-config.yaml
     
+    - name: Backup the install-config.yaml file 
+      copy:
+        src: ~/openshift4/install-config.yaml
+        dest: ~/openshift4/install-config.yaml.orig"
+    
 #    - name: Download install-config.yaml
 #      get_url:
 #        url: http://webocp4.fuji.bsctdas.local/ocp4file/install-config.yaml
 #        dest: ~/openshift4/install-config.yaml
 
-#    - name: Create manifests for OpenShift
-#      command: openshift-install create manifests --dir ~/openshift4
+    - name: Create manifests for OpenShift
+      command: openshift-install create manifests --dir ~/openshift4
 
     #- name: Change masterSchedulable true to false
     #  command: "sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' manifests/cluster-scheduler-02-config.yml"
-#    - name: Change mastersSchedulable to false
-#      lineinfile:
-#        path: ~/openshift4/manifests/cluster-scheduler-02-config.yml
-#        regexp: 'mastersSchedulable: true'
-#        line: "  mastersSchedulable: false"
+    - name: Change mastersSchedulable to false
+      lineinfile:
+        path: ~/openshift4/manifests/cluster-scheduler-02-config.yml
+        regexp: 'mastersSchedulable: true'
+        line: "  mastersSchedulable: false"
 
-#    - name: Create ignition for OpenShift
-#      command: openshift-install create ignition-configs --dir ~/openshift4
+    - name: Create ignition for OpenShift
+      command: openshift-install create ignition-configs --dir ~/openshift4
     
 # Trouver pour créer append-bootstrap.ign
     #- name: Download append-bootstrap.ign
@@ -104,11 +109,13 @@
     #    url: http://webocp4.fuji.bsctdas.local/ocp4file/append-bootstrap.ign
     #    dest: ~/openshift4/append-bootstrap.ign
     
-#    - name: Get append-bootstrap.ign
-#      template:
-#        src: ~/templates/append-bootstrap.ign.j2
-#        dest: ~/openshift4/append-bootstrap.ign
-#        remote_src: yes
+    - name: Copy install-config to local file
+      local_action: get_url url="http://webocp4.fuji.bsctdas.local/ocp4file/append-bootstrap.ign.j2" dest="./append-bootstrap.ign.j2"
+    
+    - name: Get append-bootstrap.ign
+      template:
+        src: "append-bootstrap.ign.j2"
+        dest: ~/openshift4/append-bootstrap.ign
 
 #    - name: Transfer bootstrap ignifition file from Bastion to Webserver
 #      synchronize:
@@ -124,5 +131,5 @@
       shell: "base64 -w0 ~/openshift4/{{item }}.ign > ~/openshift4/{{ item }}.64"
       with_items:
         - append-bootstrap
-#        - master
-#        - worker
+        - master
+        - worker
