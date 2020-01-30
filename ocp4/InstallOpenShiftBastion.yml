@@ -84,17 +84,10 @@
         src: ~/openshift4/install-config.yaml
         dest: ~/openshift4/install-config.yaml.orig"
         remote_src: yes
-    
-#    - name: Download install-config.yaml
-#      get_url:
-#        url: http://webocp4.fuji.bsctdas.local/ocp4file/install-config.yaml
-#        dest: ~/openshift4/install-config.yaml
 
     - name: Create manifests for OpenShift
       command: openshift-install create manifests --dir ~/openshift4
 
-    #- name: Change masterSchedulable true to false
-    #  command: "sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' manifests/cluster-scheduler-02-config.yml"
     - name: Change mastersSchedulable to false
       lineinfile:
         path: ~/openshift4/manifests/cluster-scheduler-02-config.yml
@@ -105,11 +98,6 @@
       command: openshift-install create ignition-configs --dir ~/openshift4
     
 # Trouver pour créer append-bootstrap.ign
-    #- name: Download append-bootstrap.ign
-    #  get_url:
-    #    url: http://webocp4.fuji.bsctdas.local/ocp4file/append-bootstrap.ign
-    #    dest: ~/openshift4/append-bootstrap.ign
-    
     - name: Copy install-config to local file
       local_action: get_url url="http://webocp4.fuji.bsctdas.local/ocp4file/append-bootstrap.ign.j2" dest="./append-bootstrap.ign.j2"
     
@@ -129,8 +117,23 @@
       
     
     - name: Convert ignition files to base64
-      shell: "base64 -w0 ~/openshift4/{{item }}.ign > ~/openshift4/{{ item }}.64"
-      with_items:
+      shell: "base64 -w0 ~/openshift4/{{ item }}.ign > ~/openshift4/{{ item }}.64"
+      loop:
+        - append-bootstrap
+        - master
+        - worker
+        
+    - name: Convert ignition files to base64
+      shell: "base64 -w0 ~/openshift4/{{ item }}.ign"
+      register: {{ item }}
+      loop:
+        - append-bootstrap
+        - master
+        - worker
+        
+    - name: Copy base64 ignition to local file
+      local_action: copy content="{{ item.stdout_lines[0] }}" dest="./{{ item }}.64"
+      loop:
         - append-bootstrap
         - master
         - worker
