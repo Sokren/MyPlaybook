@@ -72,10 +72,7 @@
 
 #Utiliser Template pour faire le fichier install-config.yaml
     - name: Copy install-config to local file
-      local_action: 
-        get_url:
-          url: http://webocp4.fuji.bsctdas.local/ocp4file/install-config.yaml.j2
-          dest: install-config.yaml.j2
+      local_action: get_url url="http://webocp4.fuji.bsctdas.local/ocp4file/install-config.yaml.j2" dest="install-config.yaml.j2"
           
     - name: Get install-config.yaml
       template:
