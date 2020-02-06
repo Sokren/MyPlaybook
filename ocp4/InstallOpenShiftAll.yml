@@ -173,6 +173,11 @@
         src: ~/openshift4/bootstrap.ign
         dest: /var/www/html/ignition
         remote_src: yes
+        
+    - name: Put SELinux in permissive mode, logging actions that would be blocked.
+      selinux:
+        policy: targeted
+        state: permissive
 
     - name: Create a virtual machine from a vcenter.template
       vmware_guest:
