@@ -25,7 +25,7 @@
       ocpClient: "http://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-client-linux-4.3.0.tar.gz"
       ocpInstall: "http://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-install-linux-4.3.0.tar.gz"
     b64:
-      append-bootstrap: ""
+      appendbootstrap: ""
       worker: ""
       master: ""
     table_item_worker1: { vm_name: "testworker1", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64.worker }}", vm_mac: "" }
@@ -33,7 +33,7 @@
     table_item_master1: { vm_name: "testmaster1", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64.master }}", vm_mac: "" }
     table_item_master2: { vm_name: "testmaster2", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64.master }}", vm_mac: "" }
     table_item_master3: { vm_name: "testmaster3", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64.master }}", vm_mac: "" }
-    table_item_bootstrap: { vm_name: "testbootstrap", vm_ram: "{{ vm.bootstrap_ram }}", vm_cpus: "{{ vm.bootstrap_cpus }}", ignition_file: "{{ b64.append-bootstrap }}", vm_mac: "" }
+    table_item_bootstrap: { vm_name: "testbootstrap", vm_ram: "{{ vm.bootstrap_ram }}", vm_cpus: "{{ vm.bootstrap_cpus }}", ignition_file: "{{ b64.appendbootstrap }}", vm_mac: "" }
 
 # Install  
   tasks:
@@ -146,7 +146,7 @@
     - name: get b64 to var
       slurp:
         src: ~/openshift4/append-bootstrap.ign
-      register: b64.append-bootstrap
+      register: b64.appendbootstrap
       
     - name: get b64 to var
       slurp:
