@@ -33,6 +33,10 @@
 
 # Install  
   tasks:
+    - name: debug test
+      debug:
+        msg: "{{ ansible_fqdn }}"
+
     - name: Create .openshift directory if it does not exist
       file:
         path: ~/.openshift
@@ -136,6 +140,39 @@
       slurp:
         src: ~/openshift4/master.ign
       register: b64master
+    
+    - name: Install packages for httpd
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items: 
+        - httpd
+
+    - name: Open port for HAproxy
+      command: firewall-cmd --add-port="{{ item }}" --permanent
+      with_items:
+        - 80/tcp
+
+    - name: Restart Firewalld and httpd
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: "{{ item }}"
+      with_items:
+        - firewalld
+        - httpd
+
+    - name: Create .ssh directory if it does not exist
+      file:
+        path: /var/www/html/ignition
+        state: directory
+        mode: '0755'
+
+    - name: Copy bootstrap ignition file to web server
+      copy:
+        src: ~/openshift4/bootstrap.ign
+        dest: /var/www/html/ignition
+        remote_src: yes
 
     - name: Create a virtual machine from a vcenter.template
       vmware_guest:
