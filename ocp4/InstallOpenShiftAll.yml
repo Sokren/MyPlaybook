@@ -148,8 +148,9 @@
         src: ~/openshift4/append-bootstrap.ign
       register: b64appendbootstrap
       
-    - debug:
-      msg: "{{ b64appendbootstrap['content'] | b64decode }}"
+    - name : debug
+      debug:
+        msg: "{{ b64appendbootstrap['content'] | b64decode }}"
       
     - name: get b64 to var
       slurp:
