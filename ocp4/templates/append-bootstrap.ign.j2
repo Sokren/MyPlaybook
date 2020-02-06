@@ -3,7 +3,7 @@
     "config": {
       "append": [
         {
-          "source": "http://webocp4.fuji.bsctdas.local/ignition/test/bootstrap.ign",
+          "source": "{{ ansible_fqdn }}/ignition/bootstrap.ign",
           "verification": {}
         }
       ]
