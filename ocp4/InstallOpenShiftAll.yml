@@ -24,10 +24,6 @@
     download:
       ocpClient: "http://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-client-linux-4.3.0.tar.gz"
       ocpInstall: "http://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-install-linux-4.3.0.tar.gz"
-    b64:
-      appendbootstrap: ""
-      worker: ""
-      master: ""
     table_item_worker1: { vm_name: "testworker1", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
     table_item_worker2: { vm_name: "testworker2", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
     table_item_master1: { vm_name: "testmaster1", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64master['content'] }}", vm_mac: "" }
@@ -125,32 +121,11 @@
       template:
         src: "append-bootstrap.ign.j2"
         dest: ~/openshift4/append-bootstrap.ign
-
-#    - name: Transfer bootstrap ignifition file from Bastion to Webserver
-#      synchronize:
-#        use_ssh_args: yes
-#        src: ~/openshift4/bootstrap.ign
-#        dest: /var/www/html/ignition/test/bootstrap.ign
-#        mode: pull
-#      delegate_to: "{{ webserver }}"
-#      remote_user: root
-      
-    
-#    - name: Convert ignition files to base64
-#      shell: "base64 -w0 ~/openshift4/{{ item }}.ign > ~/openshift4/{{ item }}.64"
-#      loop:
-#        - append-bootstrap
-#        - master
-#        - worker
         
     - name: get b64 to var
       slurp:
         src: ~/openshift4/append-bootstrap.ign
       register: b64appendbootstrap
-      
-    - name : debug
-      debug:
-        msg: "{{ b64appendbootstrap['content'] }}"
       
     - name: get b64 to var
       slurp:
@@ -161,15 +136,6 @@
       slurp:
         src: ~/openshift4/master.ign
       register: b64master
-      
-#    - name: Copy b64 var to local file
-#      local_action: copy content="{{ b64.append-bootstrap }}" dest="./append-bootstrap.b64"
-    
-#    - name: Copy b64 var to local file
-#      local_action: copy content="{{ b64.master }}" dest="./master.b64"
-      
-#    - name: Copy b64 var to local file
-#      local_action: copy content="{{ b64.worker }}" dest="./worker.b64"
 
     - name: Create a virtual machine from a vcenter.template
       vmware_guest:
