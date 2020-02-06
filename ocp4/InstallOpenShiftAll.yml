@@ -150,7 +150,7 @@
       
     - name : debug
       debug:
-        msg: "{{ b64appendbootstrap['content'] | b64decode }}"
+        msg: "{{ b64appendbootstrap['content'] }}"
       
     - name: get b64 to var
       slurp:
