@@ -207,6 +207,9 @@
         networks:
         - name: "VM Network"
           type: dhcp
+        customvalues:
+        - key: guestinfo.ignition.config.data
+          value: "{{ item.ignition_file }}"
       with_items:
           - "{{ table_item_worker1 }}"
           - "{{ table_item_worker2 }}"
