@@ -148,10 +148,8 @@
     
     - name: Install packages for httpd
       yum:
-        name: "{{ item }}"
+        name: httpd
         state: present
-      with_items: 
-        - httpd
 
     - name: Open port for HAproxy
       command: firewall-cmd --add-port="{{ item }}" --permanent
