@@ -174,14 +174,14 @@
         password: "{{ vcenter.password }}"
         validate_certs: no
         datacenter: "{{ vcenter.datacenter }}"
-        vcenter.folder: "{{ vcenter.folder }}" 
+        folder: "{{ vcenter.folder }}" 
         name: "{{ item.vm_name }}"
         state: present
-        vcenter.template: "{{ vcenter.template }}"
+        template: "{{ vcenter.template }}"
         disk:
         - size_gb: "{{ vm.disk_gb }}"
           type: thin
-          vcenter.datastore: "{{ vcenter.datastore }}"
+          datastore: "{{ vcenter.datastore }}"
         hardware:
           memory_mb: "{{ item.vm_ram }}"
           mem_reservation: "{{ item.vm_ram }}"
