@@ -208,7 +208,7 @@
         password: "{{ vcenter.password }}"
         validate_certs: no
         datacenter: "{{ vcenter.datacenter }}"
-        vcenter.folder: "{{ vcenter.folder }}" 
+        folder: "{{ vcenter.folder }}" 
         name: "{{ item.vm_name }}"
         state: present
         attributes:
@@ -234,7 +234,7 @@
         password: "{{ vcenter.password }}"
         validate_certs: no
         datacenter: "{{ vcenter.datacenter }}"
-        vcenter.folder: "{{ vcenter.folder }}" 
+        folder: "{{ vcenter.folder }}" 
         name: "{{ item.vm_name }}"
         gather_network_info: false
         networks:
