@@ -8,6 +8,7 @@
     vcenter_password: ""
     vm_name: ""
     state: ""
+    force: ""
     
   tasks:
     - name: Set {{ state }} of virtuals machines
@@ -18,5 +19,6 @@
         validate_certs: False
         name : "{{ item }}"
         state: "{{ state }}"
+        force: "{{ force }}"
       with_items: "{{ vm_name }}"
       delegate_to: localhost
