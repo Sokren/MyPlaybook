@@ -210,6 +210,8 @@
         customvalues:
         - key: guestinfo.ignition.config.data
           value: "{{ item.ignition_file }}"
+        - key: guestinfo.ignition.config.data.encoding
+          value: "base64"
       with_items:
           - "{{ table_item_worker1 }}"
           - "{{ table_item_worker2 }}"
@@ -230,12 +232,12 @@
         name: "{{ item.vm_name }}"
         state: present
         attributes:
-          - name: guestinfo.ignition.config.data.encoding
-            value: "base64"
+          #- name: guestinfo.ignition.config.data.encoding
+          #  value: "base64"
           - name: disk.EnableUUID
             value: "TRUE"
-          - name: guestinfo.ignition.config.data
-            value: "{{ item.ignition_file }}"
+          #- name: guestinfo.ignition.config.data
+          #  value: "{{ item.ignition_file }}"
       with_items:
           - "{{ table_item_worker1 }}"
           - "{{ table_item_worker2 }}"
