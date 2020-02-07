@@ -212,6 +212,8 @@
           value: "{{ item.ignition_file }}"
         - key: guestinfo.ignition.config.data.encoding
           value: "base64"
+        - key: disk.EnableUUID
+          value: "TRUE"
       with_items:
           - "{{ table_item_worker1 }}"
           - "{{ table_item_worker2 }}"
@@ -221,31 +223,31 @@
           - "{{ table_item_bootstrap }}"
       delegate_to: localhost
       
-    - name: change configuration parameter
-      vmware_guest_custom_attributes:
-        hostname: "{{ vcenter.ip }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: no
-        datacenter: "{{ vcenter.datacenter }}"
-        folder: "{{ vcenter.folder }}" 
-        name: "{{ item.vm_name }}"
-        state: present
-        attributes:
+    #- name: change configuration parameter
+    #  vmware_guest_custom_attributes:
+    #    hostname: "{{ vcenter.ip }}"
+    #    username: "{{ vcenter.username }}"
+    #    password: "{{ vcenter.password }}"
+    #    validate_certs: no
+    #    datacenter: "{{ vcenter.datacenter }}"
+    #    folder: "{{ vcenter.folder }}" 
+    #    name: "{{ item.vm_name }}"
+    #    state: present
+    #    attributes:
           #- name: guestinfo.ignition.config.data.encoding
           #  value: "base64"
-          - name: disk.EnableUUID
-            value: "TRUE"
+    #      - name: disk.EnableUUID
+    #        value: "TRUE"
           #- name: guestinfo.ignition.config.data
           #  value: "{{ item.ignition_file }}"
-      with_items:
-          - "{{ table_item_worker1 }}"
-          - "{{ table_item_worker2 }}"
-          - "{{ table_item_master1 }}"
-          - "{{ table_item_master2 }}"
-          - "{{ table_item_master3 }}"
-          - "{{ table_item_bootstrap }}"
-      delegate_to: localhost
+    #  with_items:
+    #      - "{{ table_item_worker1 }}"
+    #      - "{{ table_item_worker2 }}"
+    #      - "{{ table_item_master1 }}"
+    #      - "{{ table_item_master2 }}"
+    #      - "{{ table_item_master3 }}"
+    #      - "{{ table_item_bootstrap }}"
+    #  delegate_to: localhost
       
     - name: change mac address
       vmware_guest_network:
