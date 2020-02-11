@@ -209,7 +209,8 @@
           type: dhcp
         customvalues:
         - key: guestinfo.ignition.config.data
-          value: "{{ item.ignition_file }}"
+          #value: "{{ item.ignition_file }}"
+          value: "changeme"
         - key: guestinfo.ignition.config.data.encoding
           value: "base64"
         - key: disk.EnableUUID
