@@ -102,7 +102,7 @@
     - name: Backup the install-config.yaml file 
       copy:
         src: ~/openshift4/install-config.yaml
-        dest: ~/openshift4/install-config.yaml.orig"
+        dest: ~/openshift4/install-config.yaml.orig
         remote_src: yes
 
     - name: Create manifests for OpenShift
