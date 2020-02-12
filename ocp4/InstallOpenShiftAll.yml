@@ -207,12 +207,20 @@
         networks:
         - name: "VM Network"
           type: dhcp
+        vapp_properties:
+          - id: guestinfo.ignition.config.data
+            #value: "{{ item.ignition_file }}"
+            value: "changeme"
+          - id: guestinfo.ignition.config.data.encoding
+            value: "base64"
+          #- key: disk.EnableUUID
+          #  value: "TRUE"
         customvalues:
-        - key: guestinfo.ignition.config.data
+        #- key: guestinfo.ignition.config.data
           #value: "{{ item.ignition_file }}"
-          value: "changeme"
-        - key: guestinfo.ignition.config.data.encoding
-          value: "base64"
+          #value: "changeme"
+        #- key: guestinfo.ignition.config.data.encoding
+          #value: "base64"
         - key: disk.EnableUUID
           value: "TRUE"
       with_items:
