@@ -297,4 +297,21 @@
     #- name: Create ignition for OpenShift
     #  command: openshift-install wait-for bootstrap-complete --dir ~/openshift4/
     
+    #Faire export
     
+    #Mettre stockage pour quay
+    
+    #- name: Create ignition for OpenShift
+    #  command: openshift-install wait-for install-complete --dir ~/openshift4/
+    #  register: installationOpenshift
+    
+    - name: Sending an e-mail with OpenShift credentials
+      mail:
+        host: aspmx.l.google.com
+        port: 25
+        from: "{{ from }}"
+        #username: "{{ username }}"
+        #password: "{{ password }}"
+        to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
+        subject: OpenShift Installation
+        body: '{{ installationOpenshift['content'] }} et test {{ installationOpenshift['content'] | b64decode }}'
