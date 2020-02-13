@@ -1,0 +1,17 @@
+---
+- hosts: all
+  vars:
+    mail:
+      username: ""
+      password: ""
+      to: ""
+
+  - name: Sending an e-mail using Gmail SMTP servers
+    mail:
+      host: smtp.gmail.com
+      port: 465
+      username: "{{ mail.username }}"
+      password: "{{ mail.password }}"
+      to: "{{ mail.to }}" #Rémi Salandre <remi.salandre@gmail.com>
+      subject: Test Ansible-report
+      body: 'System {{ ansible_hostname }} has been successfully provisioned.'
