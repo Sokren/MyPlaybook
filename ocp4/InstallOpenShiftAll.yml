@@ -313,7 +313,10 @@
         dest: ~/.kube/config
         mode: '0755'
         remote_src: yes
-        
+    
+    - pause:
+        minutes: 2
+    
     - name: Add Storage to image registry
       command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
       #environment:
