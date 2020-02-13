@@ -297,8 +297,8 @@
     - name: Wait for bootstrap is complete
       command: openshift-install wait-for bootstrap-complete --dir ~/openshift4/
     
-    - name: Add Storage to image registry
-      command: export KUBECONFIG=~/openshift4/auth/kubeconfig
+    #- name: Add Storage to image registry
+    #  command: export KUBECONFIG=~/openshift4/auth/kubeconfig
     #Faire export
     - name: Add Storage to image registry
       command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
