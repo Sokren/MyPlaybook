@@ -277,7 +277,7 @@
       delegate_to: localhost
     
     - name: Start VMs
-      vmware_guest_network:
+      vmware_guest:
         hostname: "{{ vcenter.ip }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
