@@ -1,9 +1,9 @@
 ---
 - hosts: all
   vars:
-      username: ""
-      password: ""
-      to: ""
+    username: ""
+    password: ""
+    to: ""
   
   task:
   - name: Sending an e-mail using Gmail SMTP servers
