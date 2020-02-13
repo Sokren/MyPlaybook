@@ -300,6 +300,20 @@
     #- name: Add Storage to image registry
     #  command: export KUBECONFIG=~/openshift4/auth/kubeconfig
     #Faire export
+    
+    - name: Create .kube directory if it does not exist
+      file:
+        path: ~/.kube
+        state: directory
+        mode: '0755'
+    
+    - name: Move kubeconfig file to ~/.kube/config
+      copy:
+        src: ~/openshift4/auth/kubeconfig
+        dest: ~/.kube/config
+        mode: '0755'
+        remote_src: yes
+        
     - name: Add Storage to image registry
       command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
       #environment:
