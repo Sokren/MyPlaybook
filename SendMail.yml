@@ -10,7 +10,7 @@
       mail:
         host: aspmx.l.google.com
         port: 25
-        #username: "{{ username }}"
+        username: "{{ username }}"
         #password: "{{ password }}"
         to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
         subject: Test Ansible-report
