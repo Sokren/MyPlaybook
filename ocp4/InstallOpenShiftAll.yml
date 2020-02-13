@@ -294,7 +294,7 @@
           - "{{ table_item_master3 }}"
       delegate_to: localhost
 
-    - name: Create ignition for OpenShift
+    - name: Wait for bootstrap is complete
       command: openshift-install wait-for bootstrap-complete --dir ~/openshift4/
     
     #Faire export
@@ -303,7 +303,7 @@
       environment:
         KUBECONFIG: ~/openshift4/auth/kubeconfig
     
-    - name: Create ignition for OpenShift
+    - name: Wait for installation is complete
       command: openshift-install wait-for install-complete --dir ~/openshift4/
       register: installationOpenshift
     
