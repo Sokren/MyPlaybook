@@ -131,39 +131,22 @@
         src: ~/openshift4/append-bootstrap.ign
       register: b64appendbootstrap
       
-    - name: debug
-      debug:
-        msg: "{{ b64appendbootstrap['content'] | b64decode }}"
-
-      
     - name: get b64 to var
       slurp:
         src: ~/openshift4/worker.ign
       register: b64worker
-    
-    - name: debug
-      debug:
-        msg: "{{ b64worker['content'] | b64decode }}"
       
     - name: get b64 to var
       slurp:
         src: ~/openshift4/master.ign
       register: b64master
-      
-    - name: debug
-      debug:
-        msg: "{{ b64master['content'] | b64decode }}"
-        
-    - name: debug
-      debug:
-        msg: "{{ b64master['content'] }}"
     
     - name: Install packages for httpd
       yum:
         name: httpd
         state: present
 
-    - name: Open port for HAproxy
+    - name: Open port for Webserver
       command: firewall-cmd --add-port="{{ item }}" --permanent
       with_items:
         - 80/tcp
@@ -292,3 +275,26 @@
           - "{{ table_item_master3 }}"
           - "{{ table_item_bootstrap }}"
       delegate_to: localhost
+    
+    - name: Start VMs
+      vmware_guest_network:
+        hostname: "{{ vcenter.ip }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: no
+        name: "{{ item.vm_name }}"
+        state: poweredon
+        wait_for_ip_address: yes
+      with_items:
+          - "{{ table_item_bootstrap }}"
+          - "{{ table_item_worker1 }}"
+          - "{{ table_item_worker2 }}"
+          - "{{ table_item_master1 }}"
+          - "{{ table_item_master2 }}"
+          - "{{ table_item_master3 }}"
+      delegate_to: localhost
+
+    #- name: Create ignition for OpenShift
+    #  command: openshift-install wait-for bootstrap-complete --dir ~/openshift4/
+    
+    
