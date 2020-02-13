@@ -284,7 +284,7 @@
         validate_certs: no
         name: "{{ item.vm_name }}"
         state: poweredon
-        wait_for_ip_address: yes
+        #wait_for_ip_address: yes
       with_items:
           - "{{ table_item_bootstrap }}"
           - "{{ table_item_worker1 }}"
