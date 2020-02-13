@@ -294,16 +294,18 @@
           - "{{ table_item_master3 }}"
       delegate_to: localhost
 
-    #- name: Create ignition for OpenShift
-    #  command: openshift-install wait-for bootstrap-complete --dir ~/openshift4/
+    - name: Create ignition for OpenShift
+      command: openshift-install wait-for bootstrap-complete --dir ~/openshift4/
     
     #Faire export
+    - name: Add Storage to image registry
+      command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
+      environment:
+        KUBECONFIG: ~/openshift4/auth/kubeconfig
     
-    #Mettre stockage pour quay
-    
-    #- name: Create ignition for OpenShift
-    #  command: openshift-install wait-for install-complete --dir ~/openshift4/
-    #  register: installationOpenshift
+    - name: Create ignition for OpenShift
+      command: openshift-install wait-for install-complete --dir ~/openshift4/
+      register: installationOpenshift
     
     - name: Sending an e-mail with OpenShift credentials
       mail:
