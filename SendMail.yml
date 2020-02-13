@@ -1,7 +1,6 @@
 ---
 - hosts: all
   vars:
-    mail:
       username: ""
       password: ""
       to: ""
@@ -10,8 +9,8 @@
     mail:
       host: smtp.gmail.com
       port: 465
-      username: "{{ mail.username }}"
-      password: "{{ mail.password }}"
-      to: "{{ mail.to }}" #Rémi Salandre <remi.salandre@gmail.com>
+      username: "{{ username }}"
+      password: "{{ password }}"
+      to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
       subject: Test Ansible-report
       body: 'System {{ ansible_hostname }} has been successfully provisioned.'
