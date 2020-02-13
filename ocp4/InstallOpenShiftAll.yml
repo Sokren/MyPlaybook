@@ -221,8 +221,8 @@
           type: dhcp
         vapp_properties:
           - id: guestinfo.ignition.config.data
-            #value: "{{ item.ignition_file }}"
-            value: "changeme"
+            value: "{{ item.ignition_file }}"
+            #value: "changeme"
           - id: guestinfo.ignition.config.data.encoding
             value: "base64"
           #- key: disk.EnableUUID
