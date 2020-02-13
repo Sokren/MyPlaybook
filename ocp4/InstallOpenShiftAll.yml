@@ -332,4 +332,4 @@
         #password: "{{ password }}"
         to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
         subject: OpenShift Installation
-        body: "{{ installationOpenshift }}"
+        body: "{{ installationOpenshift.stderr }}"
