@@ -140,11 +140,23 @@
       slurp:
         src: ~/openshift4/worker.ign
       register: b64worker
+    
+    - name: debug
+      debug:
+        msg: "{{ b64worker['content'] | b64decode }}"
       
     - name: get b64 to var
       slurp:
         src: ~/openshift4/master.ign
       register: b64master
+      
+    - name: debug
+      debug:
+        msg: "{{ b64master['content'] | b64decode }}"
+        
+    - name: debug
+      debug:
+        msg: "{{ b64master['content'] }}"
     
     - name: Install packages for httpd
       yum:
