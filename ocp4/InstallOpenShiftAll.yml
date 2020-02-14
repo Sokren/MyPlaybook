@@ -331,7 +331,7 @@
     - name: Sending an e-mail with OpenShift credentials
       mail:
         host: smtp.gmail.com
-        port: 587
+        port: 465
         from: "{{ from }}"
         username: "{{ username }}"
         password: "{{ password }}"
