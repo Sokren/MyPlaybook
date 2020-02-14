@@ -325,7 +325,7 @@
       command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
       register: result
       until: result.rc == 0
-      retries: 6
+      retries: 10
       delay: 20
     
     - name: Wait for installation is complete
