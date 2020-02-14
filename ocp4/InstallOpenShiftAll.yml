@@ -321,8 +321,8 @@
       command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
       register: result
       until: result.rc == 0
-      retries: 5
-      delay: 10
+      retries: 6
+      delay: 20
     
     - name: Wait for installation is complete
       command: openshift-install wait-for install-complete --dir ~/openshift4/
@@ -338,4 +338,4 @@
         to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
         subject: OpenShift Installation
         body: "{{ installationOpenshift.stderr }}"
-        secure: starttls
+        secure: always
