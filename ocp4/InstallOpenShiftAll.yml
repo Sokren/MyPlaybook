@@ -328,11 +328,12 @@
     
     - name: Sending an e-mail with OpenShift credentials
       mail:
-        host: aspmx.l.google.com
-        port: 25
+        host: smtp.gmail.com
+        port: 587
         from: "{{ from }}"
-        #username: "{{ username }}"
-        #password: "{{ password }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
         to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
         subject: OpenShift Installation
         body: "{{ installationOpenshift.stderr }}"
+        secure: starttls
