@@ -33,10 +33,6 @@
 
 # Install  
   tasks:
-    - name: debug test
-      debug:
-        msg: "{{ ansible_fqdn }}"
-
     - name: Create .openshift directory if it does not exist
       file:
         path: ~/.openshift
@@ -47,8 +43,6 @@
         path: /tmp/ocp4
         state: directory
         mode: '0755'
-
-#Trouver comment mettre le fichier pull-secret
 
     - name: Donwload file for ocp4
       unarchive:
@@ -227,32 +221,6 @@
           - "{{ table_item_bootstrap }}"
       delegate_to: localhost
       
-    #- name: change configuration parameter
-    #  vmware_guest_custom_attributes:
-    #    hostname: "{{ vcenter.ip }}"
-    #    username: "{{ vcenter.username }}"
-    #    password: "{{ vcenter.password }}"
-    #    validate_certs: no
-    #    datacenter: "{{ vcenter.datacenter }}"
-    #    folder: "{{ vcenter.folder }}" 
-    #    name: "{{ item.vm_name }}"
-    #    state: present
-    #    attributes:
-          #- name: guestinfo.ignition.config.data.encoding
-          #  value: "base64"
-    #      - name: disk.EnableUUID
-    #        value: "TRUE"
-          #- name: guestinfo.ignition.config.data
-          #  value: "{{ item.ignition_file }}"
-    #  with_items:
-    #      - "{{ table_item_worker1 }}"
-    #      - "{{ table_item_worker2 }}"
-    #      - "{{ table_item_master1 }}"
-    #      - "{{ table_item_master2 }}"
-    #      - "{{ table_item_master3 }}"
-    #      - "{{ table_item_bootstrap }}"
-    #  delegate_to: localhost
-      
     - name: change mac address
       vmware_guest_network:
         hostname: "{{ vcenter.ip }}"
@@ -301,10 +269,6 @@
       retries: 2
       delay: 10
     
-    #- name: Add Storage to image registry
-    #  command: export KUBECONFIG=~/openshift4/auth/kubeconfig
-    #Faire export
-    
     - name: Create .kube directory if it does not exist
       file:
         path: ~/.kube
@@ -318,28 +282,25 @@
         mode: '0755'
         remote_src: yes
     
-    #- pause:
-    #    minutes: 2
+#    - name: Add Storage to image registry
+#      command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
+#      register: result
+#      until: result.rc == 0
+#      retries: 10
+#      delay: 20
     
-    - name: Add Storage to image registry
-      command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
-      register: result
-      until: result.rc == 0
-      retries: 10
-      delay: 20
+#    - name: Wait for installation is complete
+#      command: openshift-install wait-for install-complete --dir ~/openshift4/
+#      register: installationOpenshift
     
-    - name: Wait for installation is complete
-      command: openshift-install wait-for install-complete --dir ~/openshift4/
-      register: installationOpenshift
-    
-    - name: Sending an e-mail with OpenShift credentials
-      mail:
-        host: smtp.gmail.com
-        port: 465
-        from: "{{ from }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-        to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
-        subject: OpenShift Installation
-        body: "{{ installationOpenshift.stderr }}"
-        secure: always
+#    - name: Sending an e-mail with OpenShift credentials
+#      mail:
+#        host: smtp.gmail.com
+#        port: 465
+#        from: "{{ from }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
+#        to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
+#        subject: OpenShift Installation
+#        body: "{{ installationOpenshift.stderr }}"
+#        secure: always
