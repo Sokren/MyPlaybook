@@ -282,25 +282,25 @@
         mode: '0755'
         remote_src: yes
     
-#    - name: Add Storage to image registry
-#      command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
-#      register: result
-#      until: result.rc == 0
-#      retries: 10
-#      delay: 20
+    - name: Add Storage to image registry
+      command: oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
+      register: result
+      until: result.rc == 0
+      retries: 10
+      delay: 20
     
-#    - name: Wait for installation is complete
-#      command: openshift-install wait-for install-complete --dir ~/openshift4/
-#      register: installationOpenshift
+    - name: Wait for installation is complete
+      command: openshift-install wait-for install-complete --dir ~/openshift4/
+      register: installationOpenshift
     
-#    - name: Sending an e-mail with OpenShift credentials
-#      mail:
-#        host: smtp.gmail.com
-#        port: 465
-#        from: "{{ from }}"
-#        username: "{{ username }}"
-#        password: "{{ password }}"
-#        to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
-#        subject: OpenShift Installation
-#        body: "{{ installationOpenshift.stderr }}"
-#        secure: always
+    - name: Sending an e-mail with OpenShift credentials
+      mail:
+        host: smtp.gmail.com
+        port: 465
+        from: "{{ from }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
+        subject: OpenShift Installation
+        body: "{{ installationOpenshift.stderr }}"
+        secure: always
