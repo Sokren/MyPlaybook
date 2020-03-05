@@ -1,0 +1,109 @@
+---
+- hosts: all
+  vars:
+    vcenter:
+      ip: ""
+      datastore: ""
+      username: ""
+      password: ""
+      datacenter: ""
+      folder: ""
+      template: ""
+    vm:
+      worker_ram: ""
+      worker_cpus: ""
+      master_ram: ""
+      master_cpus: ""
+      bootstrap_ram: ""
+      bootstrap_cpus: ""
+      disk_gb: ""
+    table_item_worker1: { vm_name: "testworker1", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
+    table_item_worker2: { vm_name: "testworker2", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
+    table_item_worker3: { vm_name: "testworker1", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
+    table_item_worker4: { vm_name: "testworker2", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
+    table_item_master1: { vm_name: "testmaster1", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64master['content'] }}", vm_mac: "" }
+    table_item_master2: { vm_name: "testmaster2", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64master['content'] }}", vm_mac: "" }
+    table_item_master3: { vm_name: "testmaster3", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64master['content'] }}", vm_mac: "" }
+    table_item_bootstrap: { vm_name: "testbootstrap", vm_ram: "{{ vm.bootstrap_ram }}", vm_cpus: "{{ vm.bootstrap_cpus }}", ignition_file: "{{ b64appendbootstrap['content'] }}", vm_mac: "" }
+
+# Install  
+  tasks:
+    - name: Create a virtual machine from a vcenter.template
+      vmware_guest:
+        hostname: "{{ vcenter.ip }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: no
+        datacenter: "{{ vcenter.datacenter }}"
+        folder: "{{ vcenter.folder }}" 
+        name: "{{ item.vm_name }}"
+        state: present
+        template: "{{ vcenter.template }}"
+        disk:
+        - size_gb: "{{ vm.disk_gb }}"
+          type: thin
+          datastore: "{{ vcenter.datastore }}"
+        hardware:
+          memory_mb: "{{ item.vm_ram }}"
+          mem_reservation: "{{ item.vm_ram }}"
+          num_cpus: "{{ item.vm_cpus }}"
+          scsi: paravirtual
+          boot_firmware: "efi"
+        networks:
+        - name: "VM Network"
+          type: dhcp
+        vapp_properties:
+          - id: guestinfo.ignition.config.data
+            value: "changeMe"
+          - id: guestinfo.ignition.config.data.encoding
+            value: "changeMe"
+        customvalues:
+        - key: disk.EnableUUID
+          value: "TRUE"
+      with_items:
+          - "{{ table_item_worker1 }}"
+          - "{{ table_item_worker2 }}"
+          - "{{ table_item_worker3 }}"
+          - "{{ table_item_worker4 }}"
+          - "{{ table_item_master1 }}"
+          - "{{ table_item_master2 }}"
+          - "{{ table_item_master3 }}"
+          - "{{ table_item_bootstrap }}"
+      delegate_to: localhost
+      
+    - name: change mac address
+      vmware_guest_network:
+        hostname: "{{ vcenter.ip }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: no
+        datacenter: "{{ vcenter.datacenter }}"
+        folder: "{{ vcenter.folder }}" 
+        name: "{{ item.vm_name }}"
+        gather_network_info: false
+        networks:
+          - label: "Network adapter 1"
+            state: present
+            manual_mac: "{{ item.vm_mac }}"
+      with_items:
+          - "{{ table_item_worker1 }}"
+          - "{{ table_item_worker2 }}"
+          - "{{ table_item_worker3 }}"
+          - "{{ table_item_worker4 }}"
+          - "{{ table_item_master1 }}"
+          - "{{ table_item_master2 }}"
+          - "{{ table_item_master3 }}"
+          - "{{ table_item_bootstrap }}"
+      delegate_to: localhost
+    
+#    - name: Sending an e-mail with OpenShift credentials
+#      mail:
+#        host: smtp.gmail.com
+#        port: 465
+#        from: "{{ from }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
+#        to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
+#        subject: OpenShift Installation
+#        body: "{{ installationOpenshift.stderr }}"
+#        secure: always
