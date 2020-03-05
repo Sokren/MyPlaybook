@@ -4,15 +4,17 @@
     username: ""
     password: ""
     to: ""
+    body: ""
   
   tasks:
-    - name: Sending an e-mail using Gmail SMTP servers
+    - name: Sending an e-mail
       mail:
-        host: aspmx.l.google.com
-        port: 25
-        from: "{{ username }}"
-        #username: "{{ username }}"
-        #password: "{{ password }}"
+        host: smtp.gmail.com
+        port: 465
+        from: "{{ from }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
         to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
-        subject: Test Ansible-report
-        body: 'System {{ ansible_hostname }} has been successfully provisioned.'
+        subject: OpenShift Installation
+        body: "{{ body }}"
+        secure: always
