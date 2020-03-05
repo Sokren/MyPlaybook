@@ -5,6 +5,7 @@
     password: ""
     to: ""
     body: ""
+    subject: ""
   
   tasks:
     - name: Sending an e-mail
@@ -15,6 +16,6 @@
         username: "{{ username }}"
         password: "{{ password }}"
         to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
-        subject: OpenShift Installation
+        subject: "{{ subject }}"
         body: "{{ body }}"
         secure: always
