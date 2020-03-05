@@ -62,8 +62,6 @@
       with_items:
           - "{{ table_item_worker1 }}"
           - "{{ table_item_worker2 }}"
-          - "{{ table_item_worker3 }}"
-          - "{{ table_item_worker4 }}"
           - "{{ table_item_master1 }}"
           - "{{ table_item_master2 }}"
           - "{{ table_item_master3 }}"
@@ -87,8 +85,6 @@
       with_items:
           - "{{ table_item_worker1 }}"
           - "{{ table_item_worker2 }}"
-          - "{{ table_item_worker3 }}"
-          - "{{ table_item_worker4 }}"
           - "{{ table_item_master1 }}"
           - "{{ table_item_master2 }}"
           - "{{ table_item_master3 }}"
