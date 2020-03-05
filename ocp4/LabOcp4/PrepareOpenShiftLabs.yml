@@ -20,8 +20,6 @@
       disk_gb: ""
     table_item_worker1: { vm_name: "testworker1", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", vm_mac: "" }
     table_item_worker2: { vm_name: "testworker2", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", vm_mac: "" }
-    table_item_worker3: { vm_name: "testworker1", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", vm_mac: "" }
-    table_item_worker4: { vm_name: "testworker2", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", vm_mac: "" }
     table_item_master1: { vm_name: "testmaster1", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", vm_mac: "" }
     table_item_master2: { vm_name: "testmaster2", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", vm_mac: "" }
     table_item_master3: { vm_name: "testmaster3", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", vm_mac: "" }
