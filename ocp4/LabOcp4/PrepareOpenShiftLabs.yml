@@ -44,7 +44,7 @@
           datastore: "{{ vcenter.datastore }}"
         hardware:
           memory_mb: "{{ item.vm_ram }}"
-          mem_reservation: "{{ item.vm_ram }}"
+          mem_reservation: "0" #"{{ item.vm_ram }}"
           num_cpus: "{{ item.vm_cpus }}"
           scsi: paravirtual
           boot_firmware: "efi"
