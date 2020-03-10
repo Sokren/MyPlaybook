@@ -20,6 +20,6 @@
         name: "{{ item.name }}"
         type: "{{ item.type }}"
         value: "{{ item.value }}"
-        state: {{ item.state }}
+        state: "{{ item.state }}"
         zone: "{{ item.zone }}"
       with_items: "{{ dns }}"
