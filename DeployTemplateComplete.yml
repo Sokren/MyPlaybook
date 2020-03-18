@@ -39,10 +39,10 @@
           scsi: paravirtual
           boot_firmware: "efi"
         networks:
-        - name: VM Network
+        - name: "VM Network"
           type: dhcp
-#          start_connected: yes
-#          mac: "{{ vm_mac }}"
+          start_connected: yes
+          mac: "{{ vm_mac }}"
         customization:
           hostname: "{{ vm_hostname }}"
         wait_for_ip_address: yes
