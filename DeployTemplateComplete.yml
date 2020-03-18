@@ -41,7 +41,7 @@
         networks:
         - name: "VM Network"
           type: dhcp
-#          start_connected: yes
+          start_connected: yes
 #          mac: "{{ vm_mac }}"
         customization:
           hostname: "{{ vm_hostname }}"
