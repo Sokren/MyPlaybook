@@ -38,9 +38,9 @@
           num_cpus: "{{ vm_cpus }}" #For example to create a VM with 2 sockets of 4 cores, specify num_cpus: 8 and num_cpu_cores_per_socket: 4
           scsi: paravirtual
           boot_firmware: "efi"
-#        networks:
-#        - name: VM Network
-#          type: dhcp
+        networks:
+        - name: VM Network
+          type: dhcp
 #          start_connected: yes
 #          mac: "{{ vm_mac }}"
         customization:
