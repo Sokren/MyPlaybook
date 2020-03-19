@@ -79,3 +79,18 @@
         customization:
           hostname: "{{ vm.hostname }}"
       delegate_to: localhost
+      
+    - name: Change hostname of guest machine
+      vmware_vm_shell:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: no
+        datacenter: "{{ datacenter }}"
+        folder: "/{{ vcenter.datacenter }}/vm"
+        vm_id: "{{ vm.name }}"
+        vm_username: {{ vm_username }}
+        vm_password: {{ vm_password }}
+        vm_shell: "/usr/bin/hostnamectl"
+        vm_shell_args: "set-hostname {{ vm.hostname }}"
+      delegate_to: localhost
