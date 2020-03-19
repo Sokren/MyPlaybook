@@ -62,14 +62,3 @@
             state: present
             manual_mac: "{{ vm.mac }}"
       delegate_to: localhost
-    
-    - name: Start VMs
-      vmware_guest:
-        hostname: "{{ vcenter.ip }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: no
-        name: "{{ vm.name }}"
-        state: poweredon
-        wait_for_ip_address: yes
-      delegate_to: localhost
