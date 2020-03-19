@@ -42,7 +42,7 @@
         networks:
         - name: "VM Network"
           type: dhcp
-		customization:
+	  customization:
           hostname: "{{ vm.hostname }}"
       delegate_to: localhost
       
