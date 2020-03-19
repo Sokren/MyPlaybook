@@ -78,7 +78,7 @@
       
     - name: Change hostname of guest machine
       vmware_vm_shell:
-        hostname: "{{ vcenter.hostname }}"
+        hostname: "{{ vcenter.ip }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
         validate_certs: no
