@@ -64,3 +64,18 @@
             connected: yes
             start_connected: yes
       delegate_to: localhost
+      
+    - name: Start a virtual machine from a vcenter.template
+      vmware_guest:
+        hostname: "{{ vcenter.ip }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: no
+        datacenter: "{{ vcenter.datacenter }}"
+        folder: "{{ vcenter.folder }}" 
+        name: "{{ vm.name }}"
+        state: poweredon
+        wait_for_ip_address: yes
+        customization:
+          hostname: "{{ vm.hostname }}"
+      delegate_to: localhost
