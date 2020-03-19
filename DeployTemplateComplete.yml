@@ -40,7 +40,7 @@
           scsi: paravirtual
           boot_firmware: "efi"
         networks:
-        - name: "VM Network"
+        - name: "Network adapter 1"
           type: dhcp
         customization:
           hostname: "{{ vm.hostname }}"
