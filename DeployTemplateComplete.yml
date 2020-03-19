@@ -43,8 +43,6 @@
         - name: VM Network
           start_connected: yes
           type: dhcp
-        customization:
-          hostname: "{{ vm.hostname }}"
       delegate_to: localhost
       
     - name: change mac address
@@ -76,8 +74,6 @@
         name: "{{ vm.name }}"
         state: poweredon
         wait_for_ip_address: yes
-        customization:
-          hostname: "{{ vm.hostname }}"
       delegate_to: localhost
       
     - name: Change hostname of guest machine
