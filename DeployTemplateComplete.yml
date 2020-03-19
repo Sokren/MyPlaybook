@@ -61,4 +61,6 @@
           - label: "Network adapter 1"
             state: present
             manual_mac: "{{ vm.mac }}"
+            connected: yes
+            start_connected: yes
       delegate_to: localhost
