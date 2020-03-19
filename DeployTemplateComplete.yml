@@ -40,7 +40,7 @@
           scsi: paravirtual
           boot_firmware: "efi"
         networks:
-        - name: "VM Network"
+        - name: VM Network
           start_connected: yes
           type: dhcp
         customization:
