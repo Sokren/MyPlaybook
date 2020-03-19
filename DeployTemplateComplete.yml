@@ -12,11 +12,11 @@
       folder: ""
       template: ""
     vm:
-	  name: ""
+      name: ""
       ram: ""
       cpus: ""
       disk_gb: ""
-	  hostname: ""
+      hostname: ""
     
   tasks:
     - name: Create a virtual machine from a vcenter.template
