@@ -22,12 +22,12 @@
     pullSecret: ""
     sshKey: ""
     download:
-      ocpClient: "http://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.4.11/openshift-client-linux-4.4.11.tar.gz"
-      ocpInstall: "http://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.4.11/openshift-install-linux-4.4.11.tar.gz"
+      ocpClient: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.29/openshift-client-linux.tar.gz"
+      ocpInstall: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.29/openshift-install-linux.tar.gz"
     table_item_worker1: { vm_name: "testworker1", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
     table_item_worker2: { vm_name: "testworker2", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
-    table_item_worker3: { vm_name: "testworker1", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
-    table_item_worker4: { vm_name: "testworker2", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
+    table_item_worker3: { vm_name: "testworker3", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
+    table_item_worker4: { vm_name: "testworker4", vm_ram: "{{ vm.worker_ram }}", vm_cpus: "{{ vm.worker_cpus }}", ignition_file: "{{ b64worker['content'] }}", vm_mac: "" }
     table_item_master1: { vm_name: "testmaster1", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64master['content'] }}", vm_mac: "" }
     table_item_master2: { vm_name: "testmaster2", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64master['content'] }}", vm_mac: "" }
     table_item_master3: { vm_name: "testmaster3", vm_ram: "{{ vm.master_ram }}", vm_cpus: "{{ vm.master_cpus }}", ignition_file: "{{ b64master['content'] }}", vm_mac: "" }
