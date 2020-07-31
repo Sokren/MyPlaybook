@@ -190,7 +190,7 @@
           datastore: "{{ vcenter.datastore }}"
         hardware:
           memory_mb: "{{ item.vm_ram }}"
-          #mem_reservation: "{{ item.vm_ram }}"
+          mem_reservation: "{{ item.vm_ram }}"
           num_cpus: "{{ item.vm_cpus }}" #For example to create a VM with 2 sockets of 4 cores, specify num_cpus: 8 and num_cpu_cores_per_socket: 4
           #num_cpu_cores_per_socket: "{{ vm_cpu_cores_per_socket }}"
           scsi: paravirtual
