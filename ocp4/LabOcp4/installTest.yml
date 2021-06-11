@@ -1,9 +1,0 @@
----
-# Install HA Proxy
-- hosts: all
-  vars:
-
-  tasks:  
-    - name: debug test
-      debug:
-        msg: "{{ ansible_user }}"
