@@ -308,7 +308,7 @@
 #        from: "{{ from }}"
 #        username: "{{ username }}"
 #        password: "{{ password }}"
-#        to: "{{ to }}" #Rémi Salandre <remi.salandre@gmail.com>
+#        to: "{{ to }}" 
 #        subject: OpenShift Installation
 #        body: "{{ installationOpenshift.stderr }}"
 #        secure: always
